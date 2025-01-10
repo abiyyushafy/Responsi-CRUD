@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Mahasiswa Amikom Yogyakarta</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function confirmDelete(nim) {
+            if (confirm('Apakah Anda yakin ingin menghapus data mahasiswa dengan NIM ' + nim + '?')) {
+                window.location.href = "{{ url_for('delete', nim='') }}" + nim;
+            }
+            return false;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" class="logo">
+        <h1>Data Mahasiswa Amikom Yogyakarta</h1>
+    </header>
+    <a href="{{ url_for('add') }}" class="button">Tambah Data</a>
+    <table>
+        <thead>
+            <tr>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Asal</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for mhs in mahasiswa %}
+            <tr>
+                <td>{{ mhs.nim }}</td>
+                <td>{{ mhs.nama }}</td>
+                <td>{{ mhs.asal }}</td>
+                <td>
+                    <a href="{{ url_for('edit', nim=mhs.nim) }}" class="button-edit">Ubah</a>
+                    <a href="#" onclick="return confirmDelete('{{ mhs.nim }}')" class="button-delete">Hapus</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
